@@ -1,48 +1,62 @@
 import type { NextPage } from 'next'
-import { Button, Center, Heading, SimpleGrid } from "@chakra-ui/react"
-import TypeIt from "typeit-react"
-import { useState } from 'react'
+import { Button, Heading, SimpleGrid } from "@chakra-ui/react"
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { motion, useAnimationControls } from "framer-motion"
+import { animateContainer, animateItem } from '../transitions'
 import MainLayout from "../layouts/main.layout"
 
 const Prepare: NextPage = () => {
   const router = useRouter()
-  const [showCompletedButton, setShowCompletedButton ] = useState(false)
+  const containerControls = useAnimationControls()
 
-  const nextScreen = () => {
+  useEffect(() => {
+    sequence()
+  }, [])
+
+  const sequence = async () => {
+    await containerControls.start("shown")
+  }
+
+  const nextScreen = async () => {
     if (document.body.requestFullscreen) document.body.requestFullscreen()
-    router.push("start")
+
+    await containerControls.start("hidden")
+
+    router.push("/start")
   }
 
   return (
     <MainLayout>
       <SimpleGrid columns={1} spacing={10}>
-        <Heading size="2xl" textAlign="center">
-          <TypeIt
-            getBeforeInit={(instance) => {
-              instance
-                .options({
-                  speed: 70,
-                  lifeLike: false,
-                })
-                .type("Switch all your devices to slient.")
-                .pause(500)
-                .exec(() => setShowCompletedButton(true))
-
-              return instance;
-            }}
-          />
-        </Heading>
-
-        <Button
-          colorScheme='teal'
-          variant='outline'
-          size='lg'
-          opacity={showCompletedButton ? 1 : 0}
-          onClick={nextScreen}
+        <motion.div
+          variants={animateContainer}
+          initial="hidden"
+          animate={containerControls}
         >
-          Done&nbsp; 	&#10003;
-        </Button>
+          <motion.div
+            variants={animateItem}
+          >
+            <Heading size="2xl" textAlign="center">
+              Switch all your devices to silent.
+            </Heading>
+          </motion.div>
+          <motion.div
+            variants={animateItem}
+          >
+            <Button
+              colorScheme='teal'
+              variant='outline'
+              size='lg'
+              w="100%"
+              py={5}
+              mt={10}
+              onClick={nextScreen}
+            >
+              Click here when done
+            </Button>
+          </motion.div>
+        </motion.div>
       </SimpleGrid>
     </MainLayout>
   )
