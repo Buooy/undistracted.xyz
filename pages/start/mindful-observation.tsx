@@ -3,8 +3,8 @@ import { Center, Heading, SimpleGrid } from "@chakra-ui/react"
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { motion, useAnimationControls } from "framer-motion"
-import YouTube from 'react-youtube';
-import {useWindowSize} from 'react-use';
+import YouTube from 'react-youtube'
+import {useWindowSize} from 'react-use'
 import { animateContainer, animateItem } from '../../transitions'
 import MainLayout from "../../layouts/main.layout"
 

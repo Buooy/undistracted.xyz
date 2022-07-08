@@ -1,5 +1,6 @@
-import { FC, ReactNode } from "react"
-import { Center, Heading, SimpleGrid } from "@chakra-ui/react"
+import { FC, ReactNode, useEffect, useState } from "react"
+import { Center } from "@chakra-ui/react"
+import {useWindowSize} from 'react-use'
 
 type Props = {
   children?: ReactNode;
@@ -8,7 +9,14 @@ type Props = {
 const MainLayout: FC<Props> = ({
   children
 }) => {
-  return <Center bg='#b0cece' h='100vh' color='#0c2543'>
+  const {width, height} = useWindowSize()
+  const [mainHeight, setMainHeight] = useState(0)
+
+  useEffect(() => {
+    setMainHeight(height)
+  }, [height])
+
+  return <Center bg='#b0cece' h={mainHeight + 'px'} px={3} color='#0c2543'>
     { children }
   </Center>
 }
