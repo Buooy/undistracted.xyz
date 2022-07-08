@@ -146,31 +146,6 @@ const MindfulBreathing: NextPage = () => {
               { text }
             </Heading>
           </motion.div>
-        {/*
-        <Heading size="2xl" textAlign="center">
-          <TypeIt
-            getBeforeInit={(instance) => {
-              instance
-                .options({
-                  speed: 70,
-                  lifeLike: false,
-                })
-
-                .type("Awesome... feeling good?")
-                .pause(750)
-                .delete()
-
-                .type("Let's move on to the next exercise.")
-                .pause(1000)
-                .empty()
-                
-                .exec(nextScreen)
-
-              return instance;
-            }}
-          />
-        </Heading>
-          */}
         </motion.div>
       </SimpleGrid>
     </MainLayout>
